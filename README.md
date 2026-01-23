@@ -177,5 +177,82 @@ EXTERNAL-IP   127.0.0.1
 - `/etc/hosts` change is local-only and safe
 
 ---
+---
+
+## Cleanup (Remove Everything After Testing)
+
+When you are done testing, you can clean up safely using the steps below.
+
+### 1. Delete the Ingress resource
+
+```bash
+kubectl delete -f dashboard-ingress.yaml
+```
+
+Or if you created it manually:
+
+```bash
+kubectl delete ingress dashboard-ingress -n kubernetes-dashboard
+```
+
+---
+
+### 2. Stop the Minikube tunnel (Docker driver users)
+
+In the terminal where `minikube tunnel` is running:
+
+Press:
+
+```
+CTRL + C
+```
+
+---
+
+### 3. Remove hosts file entry
+
+Edit your hosts file:
+
+```bash
+sudo nano /etc/hosts
+```
+
+Remove this line:
+
+```text
+127.0.0.1 dashboard.com
+```
+
+(or the Minikube IP if you used a VM driver)
+
+Save and exit.
+
+---
+
+### 4. (Optional) Disable addons
+
+```bash
+minikube addons disable ingress
+minikube addons disable dashboard
+```
+
+---
+
+### 5. (Optional) Stop Minikube completely
+
+```bash
+minikube stop
+```
+
+Or delete the cluster:
+
+```bash
+minikube delete
+```
+
+---
+
+Cleanup complete ✅
+---
 
 Happy clustering 🚀
